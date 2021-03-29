@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create">
+</form>
+<table>
+    <tr>
+        <td>Course</td>
+        <td>Duration</td>
+    </tr>
+    {% for course in courses %}
+    <tr>
+        <td>{{ course.course_name }}</td>
+        <td>{{ course.course_duration }}</td>
+         <td><a href="{% url 'course_edit' course.id %}">Edit</a> </td>
+        <td><a href="{% url 'course_delete' course.id %}">Delete</a> </td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
