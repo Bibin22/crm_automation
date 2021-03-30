@@ -1,0 +1,29 @@
+{% extends 'app_crm/ch_base.html' %}
+{% block body_block %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+     <input type="submit" class="btn btn-outline-primary" value="Create">
+</form>
+<table class="table">
+    <tr>
+        <td>Batch Code</td>
+        <td>Course</td>
+        <td>Start-Date</td>
+        <td>Fees</td>
+        <td>Status</td>
+    </tr>
+    {% for batch in batches %}
+    <tr>
+        <td>{{ batch.batch_code }}</td>
+        <td>{{ batch.course_name }}</td>
+          <td>{{ batch.start_date }}</td>
+        <td>{{ batch.fees }}</td>
+          <td>{{ batch.status }}</td>
+
+         <td><a href="{% url 'batch_edit' batch.id %}" class="btn btn-primary btn-block">Edit</a> </td>
+        <td><a href="{% url 'batch_delete' batch.id %}" class="btn btn-primary btn-block">Delete</a> </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'app_crm/ch_base.html' %}
+{% block body_block %}
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Create">
+    <input type="submit" class="btn btn-outline-primary" value="Create">
 </form>
-<table>
+<table class="table">
     <tr>
         <td>Course</td>
         <td>Duration</td>
@@ -19,10 +14,9 @@
     <tr>
         <td>{{ course.course_name }}</td>
         <td>{{ course.course_duration }}</td>
-         <td><a href="{% url 'course_edit' course.id %}">Edit</a> </td>
-        <td><a href="{% url 'course_delete' course.id %}">Delete</a> </td>
+         <td><a href="{% url 'course_edit' course.id %}" class="btn btn-primary btn-block">Edit</a> </td>
+        <td><a href="{% url 'course_delete' course.id %}"class="btn btn-primary btn-block">Delete</a> </td>
     </tr>
     {% endfor %}
 </table>
-</body>
-</html>
+{% endblock %}

@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'project_crmautomation.wsgi.application'
 DATABASES = {
     'default':{
         'ENGINE':'django.db.backends.mysql',
-        'NAME':'crm00',
+        'NAME':'crm01',
         'HOST':'127.0.0.1',
         'USER':'root',
         'PASSWORD':'1234',

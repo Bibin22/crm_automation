@@ -1,0 +1,34 @@
+{% extends 'app_crm/cs_base.html' %}
+{% block body_block %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-outline-primary" value="Create">
+</form>
+<table class="table">
+    <tr>
+        <td>Enquiry Id</td>
+        <td>Admission Number</td>
+        <td>fees</td>
+        <td>Batch</td>
+        <td>date</td>
+    </tr>
+    {% for a in admissions%}
+
+    <tr>
+        <td>{{ a.eid }}</td>
+        <td><a href="{% url 'st_view' a.id %}" >{{ a.admission_number }}</a></td>
+        <td>{{ a.fees }}</td>
+          <td>{{ a.batch_code }}</td>
+          <td>{{ a.date }}</td>
+
+         <td><a href="{% url 'admission_edit' a.id %}">Edit</a> </td>
+        <td><a href="{% url 'admission_delete' a.id %}">Delete</a> </td>
+        <td><a href="{% url 'st_register' a.id %}">Registration</a> </td>
+
+
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

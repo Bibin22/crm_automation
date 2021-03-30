@@ -21,11 +21,11 @@ class Batch(models.Model):
         return self.batch_code
 
 class Enquiry(models.Model):
-    enquiry_id = models.CharField(primary_key=True, editable=False, max_length=20)
+    enquiry_id = models.CharField(max_length=20, unique=True)
     student_name = models.CharField(max_length=20)
     address = models.TextField()
     email = models.EmailField(max_length=50)
-    phone = models.IntegerField()
+    phone = models.IntegerField(max_length=20)
     qualification = models.CharField(max_length=50)
     college = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -38,17 +38,17 @@ class Enquiry(models.Model):
 
 class Admissions(models.Model):
     admission_number = models.CharField(max_length=20, unique=True)
-    eid = models.ForeignKey(Enquiry,on_delete=models.CASCADE)
+    eid = models.CharField(max_length=20, unique=True)
     fees = models.IntegerField()
     batch_code = models.ForeignKey(Batch, on_delete=models.CASCADE)
     date = models.DateField(default=date.today())
     def __str__(self):
-        return self.admission_number
+        return str(self.admission_number)
 class Payment(models.Model):
-    admission_number = models.ForeignKey(Admissions, on_delete=models.CASCADE)
+    admission_number = models.CharField(max_length=20, unique=True)
     amount = models.IntegerField()
-    date = models.DateField()
-    eid = models.ForeignKey(Enquiry, on_delete=models.CASCADE)
+    date = models.DateField(default=date.today())
+    eid = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
         return self.admission_number
