@@ -223,6 +223,7 @@ class Enquiry_Creation(TemplateView):
     form_class = EnquiryCreateForm
     template_name = 'app_crm/cs_student_enquiry.html'
     def get(self, request, *args, **kwargs):
+
         enquiry = self.model.objects.last()
         if enquiry:
             last_eid = enquiry.enquiry_id
@@ -308,10 +309,6 @@ class Admission_Creation(TemplateView):
 
     def get_object(self, id):
         return Enquiry.objects.get(id=id)
-
-
-
-
     def get(self, request, *args, **kwargs):
         admission = self.model.objects.last()
         id = kwargs.get("id")
@@ -326,7 +323,15 @@ class Admission_Creation(TemplateView):
         admissions = Admissions.objects.all()
         eid = students.enquiry_id
         batch = students.batch
-        form = self.form_class(initial={'admission_number': adm,'eid':eid, 'batch_code':batch})
+        form = self.form_class(initial={'admission_number': adm, 'eid': eid, 'batch_code': batch})
+        #eid = students.enquiry_id
+        #batch = students.batch
+        #batchcode = Enquiry.objects.filter(batch__batch_code=batch)
+        #bcode = [b.batch for b in batchcode]
+        #for i in bcode:
+         #   code = i.batch_code
+
+        #form = self.form_class(initial={'admission_number': adm,'eid':eid, 'batch_code':code})
 
         self.context = {
             "admissions": admissions,
@@ -336,6 +341,7 @@ class Admission_Creation(TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
+
         if form.is_valid():
             form.save()
             admissions = Admissions.objects.all()
@@ -501,7 +507,39 @@ class Student_Payments(TemplateView):
             return render(request, self.template_name, self.context)
 
 
+class DashBoard(TemplateView):
+    template_name = 'app_crm/admin.html'
+    def get(self, request, *args, **kwargs):
+        context = {}
+        lst = []
+        lst1 = []
+        lst2 = []
+        status = 'yet to begin'
+        dic = {}
+        dic1 = {}
+        batch = Batch.objects.filter(status=status)
+        admision = Admissions.objects.filter(batch_code__in=[b.batch_code for b in batch])
+        enquiry = Enquiry.objects.filter(enquiry_id__in=[a.eid for a in admision])
+        course = [e.course for e in enquiry]
 
+        for obj in course:
+            if obj not in dic1:
+                lst.append(str(obj))
 
+                dic1[obj] = 1
+            else:
+                dic1[obj]+=1
 
+        for key, value in dic1.items():
 
+            if key not in dic:
+                dic[str(key)] = value
+
+        count = str(len(lst))
+
+        context = {
+            "dic":dic,
+            "lst":lst,
+            "count":count
+        }
+        return render(request, self.template_name, context)

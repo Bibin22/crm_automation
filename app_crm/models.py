@@ -34,13 +34,13 @@ class Enquiry(models.Model):
     choices = (('admited', 'admited'), ('not admited','not admited'))
     status = models.CharField(max_length=20, choices=choices)
     def __str__(self):
-        return str(self.enquiry_id)
+        return str(self.enquiry_id) + str(self.course)
 
 class Admissions(models.Model):
     admission_number = models.CharField(max_length=20, unique=True)
     eid = models.CharField(max_length=20, unique=True)
     fees = models.IntegerField()
-    batch_code = models.ForeignKey(Batch, on_delete=models.CASCADE)
+    batch_code = models.CharField(max_length=20)
     date = models.DateField(default=date.today())
     def __str__(self):
         return str(self.admission_number)

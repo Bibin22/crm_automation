@@ -20,7 +20,7 @@ class BatchCreateForm(ModelForm):
         widgets = {
             'batch_code': forms.TextInput(attrs={'class': 'form-control'}),
             'course_name': forms.Select(attrs={'class': 'form-control'}),
-            'Start_date': forms.TextInput(attrs={'class': 'form-control'}),
+            'start_date': forms.TextInput(attrs={'class': 'form-control'}),
             'fees': forms.TextInput(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
 
@@ -48,18 +48,54 @@ class EnquiryCreateForm(ModelForm):
     class Meta:
         model = Enquiry
         fields = "__all__"
+        widgets = {
+            'enquiry_id': forms.TextInput(attrs={'class': 'form-control','readonly': 'readonly'}),
+            'student_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.Textarea(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'qualification': forms.TextInput(attrs={'class': 'form-control'}),
+            'college': forms.TextInput(attrs={'class': 'form-control'}),
+            'course': forms.Select(attrs={'class': 'form-control'}),
+            'batch': forms.Select(attrs={'class': 'form-control'}),
+            'followup_date': forms.TextInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+
+        }
+
 
 class AdmissionCreateForm(ModelForm):
     class Meta:
         model = Admissions
         fields = "__all__"
 
+        widgets = {
+           'admission_number': forms.TextInput(attrs={'class': 'form-control','readonly': 'readonly'}),
+           'eid': forms.TextInput(attrs={'class': 'form-control','readonly': 'readonly'}),
+           'fees': forms.TextInput(attrs={'class': 'form-control'}),
+            'batch_code': forms.TextInput(attrs={'class': 'form-control','readonly': 'readonly'}),
+            'date': forms.TextInput(attrs={'class': 'form-control','readonly': 'readonly'}),
+
+        }
+
 class StudentRegistraionForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1']
-
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'password1': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 class PaymentCreateForm(ModelForm):
     class Meta:
         model = Payment
         fields = "__all__"
+
+        widgets = {
+            'admission_number': forms.TextInput(attrs={'class': 'form-control','readonly': 'readonly'}),
+            'amount': forms.TextInput(attrs={'class': 'form-control'}),
+            'date': forms.TextInput(attrs={'class': 'form-control','readonly': 'readonly'}),
+            'eid': forms.TextInput(attrs={'class': 'form-control','readonly': 'readonly'}),
+
+
+        }

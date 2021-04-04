@@ -36,7 +36,10 @@
 
          <td><a href="{% url 'enquiry_edit' s.id %}" class="btn btn-primary btn-block">Edit</a> </td>
         <td><a href="{% url 'enquiry_delete' s.id %}" class="btn btn-primary btn-block">Delete</a> </td>
-        <td><a href="{% url 'admission' s.id %}" class="btn btn-primary btn-block">Register</a> </td>
+            {% if s.status == "admited" %}
+         <td><a href="{% url 'admission' s.id %}" class="btn btn-primary btn-block">Register</a> </td>
+        {% endif %}
+
     </tr>
     {% endfor %}
 </table>
