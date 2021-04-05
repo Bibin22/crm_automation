@@ -5,7 +5,22 @@
     <title>Title</title>
 </head>
 <body>
+<h1>Fees</h1>
+{% for i in fees %}
+{{ i }}
+{% endfor %}
+<h1>Amount</h1>
+{% for i in amount %}
+{{ i }}
+{% endfor %}
+<h1>Balance</h1>
+{% for i in total %}
+{{ i }}
+{% endfor %}
 
+<h1>PEnding FEEs</h1>
+
+ {% for key, value in course.items %}
  {{ key }} {{ value }}
  {% endfor %}
 

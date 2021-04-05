@@ -6,6 +6,7 @@ from .forms import CourseCreateForm, BatchCreateForm, CounsellorRegistrationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from datetime import date
+from django.db.models import Sum
 class Course_Registration(TemplateView):
     model = Course
     form_class = CourseCreateForm
@@ -512,8 +513,6 @@ class DashBoard(TemplateView):
     def get(self, request, *args, **kwargs):
         context = {}
         lst = []
-        lst1 = []
-        lst2 = []
         status = 'yet to begin'
         dic = {}
         dic1 = {}
@@ -537,9 +536,53 @@ class DashBoard(TemplateView):
 
         count = str(len(lst))
 
+
+
+        #Pending Fees
+
+        status = "in progress"
+        f_batch = Batch.objects.filter(status=status)
+        f_admision = Admissions.objects.filter(batch_code__in=[b.batch_code for b in f_batch])
+        fees = [a.fees for a in f_admision]
+        #print(fees)
+        f_enquiry = Enquiry.objects.filter(enquiry_id__in=[a.eid for a in f_admision])
+        crse = [e.course for e in f_enquiry]
+        course_1 = {}
+        course_2 = {}
+        count_1 = []
+
+        #total = f_admision["fees__sum"]
+        #print(total)
+        pay = Payment.objects.filter(admission_number__in=[a.admission_number for a in f_admision])
+        amount = [p.amount for p in pay]
+        fees = [a.fees for a in f_admision]
+        total = [x1 - x2 for (x1, x2) in zip(fees, amount)]
+        for obj in crse:
+            if obj not in course_1:
+                count_1.append(obj)
+                course_1[obj] = None
+            else:
+                course_1[obj] = None
+
+        for fee in total:
+            course_1[obj] = fee
+
+        for key, value in course_1.items():
+
+            if key not in dic:
+                course_2[str(key)] = value
+
+        #print(course_2)
+        count1= str(len(count_1))
+
         context = {
-            "dic":dic,
-            "lst":lst,
-            "count":count
+            "dic": dic,
+            "lst": lst,
+            "count": count,
+
+            "course":course_2,
+            "count_1": count1,
+
         }
+
         return render(request, self.template_name, context)
