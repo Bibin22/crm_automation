@@ -151,27 +151,25 @@ class CounsellorRegistration(TemplateView):
             return render(request, self.template_name, self.context)
 
 class CounsellorLogin(TemplateView):
-    form_class = LoginForm
-    template_name = 'app_crm/cs_login.html'
+    #form_class = LoginForm
+    template_name = 'app_crm/login.html'
     def get(self, request, *args, **kwargs):
-        self.context = {
-            "form":self.form_class
-        }
-        return render(request, self.template_name, self.context)
+
+        return render(request, self.template_name)
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
+        if request.method == 'POST':
+            username = request.POST.get("uname")
+            password = request.POST.get("pwd")
             user = authenticate(username=username, password=password)
-            if user != None:
-                login(request,user)
+            if user is not None:
+                login(request, user)
                 return redirect('enquiry')
             else:
-                self.context = {
-                    "form":form
-                }
-                return render(request, self.template_name, self.context)
+                return render(request, 'app_crm/login.html', {"message": "invalid usernam or password"})
+        return render(request, 'app_crm/login.html')
+
+
+
 
 class Counsellor_View(TemplateView):
     model = User
@@ -449,29 +447,25 @@ class Student_Registration(TemplateView):
             return render(request, self.template_name, self.context)
 
 class Student_login(TemplateView):
-    form_class = LoginForm
-    template_name = 'app_crm/cs_login.html'
+    #form_class = LoginForm
+    template_name = 'app_crm/login.html'
 
     def get(self, request, *args, **kwargs):
-        self.context = {
-            "form": self.form_class
-        }
-        return render(request, self.template_name, self.context)
+
+        return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
+        if request.method == 'POST':
+            username = request.POST.get("uname")
+            password = request.POST.get("pwd")
             user = authenticate(username=username, password=password)
-            if user != None:
+            if user is not None:
                 login(request, user)
-                return render(request, 'app_crm/st_home.html')
+                return redirect('pay')
             else:
-                self.context = {
-                    "form": form
-                }
-                return render(request, self.template_name, self.context)
+                return render(request, 'app_crm/login.html', {"message": "invalid usernam or password"})
+        return render(request, 'app_crm/login.html')
+
 
 class Student_Payments(TemplateView):
     model = Payment

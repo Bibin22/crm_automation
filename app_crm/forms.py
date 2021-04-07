@@ -92,10 +92,10 @@ class PaymentCreateForm(ModelForm):
         fields = "__all__"
 
         widgets = {
-            'admission_number': forms.TextInput(attrs={'class': 'form-control','readonly': 'readonly'}),
-            'amount': forms.TextInput(attrs={'class': 'form-control'}),
-            'date': forms.TextInput(attrs={'class': 'form-control','readonly': 'readonly'}),
-            'eid': forms.TextInput(attrs={'class': 'form-control','readonly': 'readonly'}),
+            'admission_number': forms.TextInput(attrs={'class': 'form-control shadow-none bg-light', 'readonly':'readonly'}),
+            'amount': forms.TextInput(attrs={'class': 'form-control shadow-none bg-light'}),
+            'date': forms.TextInput(attrs={'class': 'form-control','readonly shadow-none bg-light': 'readonly'}),
+            'eid': forms.TextInput(attrs={'class': 'form-control','readonly shadow-none bg-light': 'readonly'}),
 
 
         }
