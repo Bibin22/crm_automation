@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'project_crmautomation.wsgi.application'
 DATABASES = {
     'default':{
         'ENGINE':'django.db.backends.mysql',
-        'NAME':'crm03',
+        'NAME':'crm',
         'HOST':'127.0.0.1',
         'USER':'root',
-        'PASSWORD':'1234',
+        'PASSWORD':'Bibin@23',
 
     }
 }

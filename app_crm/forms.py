@@ -3,7 +3,7 @@ from django import forms
 from .models import Course,Batch,Enquiry, Admissions, Payment
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-
+import datetime
 class CourseCreateForm(ModelForm):
     class Meta:
         model = Course
@@ -20,11 +20,23 @@ class BatchCreateForm(ModelForm):
         widgets = {
             'batch_code': forms.TextInput(attrs={'class': 'form-control'}),
             'course_name': forms.Select(attrs={'class': 'form-control'}),
-            'start_date': forms.TextInput(attrs={'class': 'form-control'}),
+            'start_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'fees': forms.TextInput(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
 
         }
+
+
+    def clean(self):
+        cleaned_data = super().clean()
+        fees = cleaned_data.get('fees')
+
+        if fees < 10000:
+            msg = " Fees should be grater than 10000"
+            self.add_error("fees", msg)
+
+
+
 
 class CounsellorRegistrationForm(UserCreationForm):
     class Meta:
@@ -52,16 +64,24 @@ class EnquiryCreateForm(ModelForm):
             'enquiry_id': forms.TextInput(attrs={'class': 'form-control','readonly': 'readonly'}),
             'student_name': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.Textarea(attrs={'class': 'form-control'}),
-            'email': forms.TextInput(attrs={'class': 'form-control'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'phone': forms.NumberInput(attrs={'class': 'form-control'}),
             'qualification': forms.TextInput(attrs={'class': 'form-control'}),
             'college': forms.TextInput(attrs={'class': 'form-control'}),
             'course': forms.Select(attrs={'class': 'form-control'}),
             'batch': forms.Select(attrs={'class': 'form-control'}),
-            'followup_date': forms.TextInput(attrs={'class': 'form-control'}),
+            'followup_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
 
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        followup_date = cleaned_data.get('followup_date')
+
+        if followup_date < datetime.date.today():
+            msg = " Follow Up date should be future date"
+            self.add_error("followup_date", msg)
 
 
 class AdmissionCreateForm(ModelForm):
@@ -77,6 +97,14 @@ class AdmissionCreateForm(ModelForm):
             'date': forms.TextInput(attrs={'class': 'form-control','readonly': 'readonly'}),
 
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        fees = cleaned_data.get('fees')
+
+        if fees < 10000:
+            msg = " Fees should be grater than 10000"
+            self.add_error("fees", msg)
 
 class StudentRegistraionForm(UserCreationForm):
     class Meta:

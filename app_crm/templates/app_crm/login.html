@@ -48,10 +48,14 @@
 
 
 
-               {% if message %}
-                {{ message }}
-                {% endif %}
 
+             <div class="form-group">
+                 {% if message %}
+                 <div class="alert alert-danger">
+                     {{ message }}
+                 </div>
+                 {% endif %}
+             </div>
 
         </div>
 

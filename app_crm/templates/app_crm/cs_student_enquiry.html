@@ -9,14 +9,14 @@
     <tr>
         <td>Enquiry Id</td>
         <td>Student Name</td>
-        <td>Address</td>
-        <td>Email</td>
+
+
         <td>Phone</td>
          <td>Qualification</td>
-        <td>College</td>
+
         <td>Course</td>
         <td>Batch</td>
-        <td>Follow Up Date</td>
+
         <td>Status</td>
 
     </tr>
@@ -24,14 +24,14 @@
     <tr>
         <td>{{ s.enquiry_id }}</td>
         <td>{{ s.student_name }}</td>
-          <td>{{ s.address }}</td>
-        <td>{{ s.email }}</td>
+
+
           <td>{{ s.phone }}</td>
          <td>{{ s.qualification }}</td>
-        <td>{{ s.college }}</td>
+
           <td>{{ s.course }}</td>
         <td>{{ s.batch }}</td>
-          <td>{{ s.followup_date }}</td>
+
         <td>{{ s.status }}</td>
 
          <td><a href="{% url 'enquiry_edit' s.id %}" class="btn btn-primary btn-block">Edit</a> </td>

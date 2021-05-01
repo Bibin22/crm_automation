@@ -272,6 +272,9 @@ class Enquiry_Edit(TemplateView):
         id = kwargs.get("id")
         students = self.get_object(id)
         form = self.form_class(request.POST, instance=students)
+        self.context = {
+            "form":form
+        }
         if form.is_valid():
             #eid = form.cleaned_data.get("enquiry_id")
 

@@ -25,7 +25,7 @@ class Enquiry(models.Model):
     student_name = models.CharField(max_length=20)
     address = models.TextField()
     email = models.EmailField(max_length=50)
-    phone = models.IntegerField(max_length=20)
+    phone = models.CharField(max_length=10)
     qualification = models.CharField(max_length=50)
     college = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
