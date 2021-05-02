@@ -2,7 +2,7 @@ from django.urls import path
 from .views import Course_Registration, Course_edit, Course_delete, Batch_Creation, Batch_edit, Batch_delete,\
     CounsellorRegistration, CounsellorLogin, Counsellor_View, Counsellor_Edit, Counsellor_Delete, Enquiry_Creation, \
     Enquiry_Edit, Enquiry_Delete, Follow_up, Admission_Creation, Admission_Edit, Admission_Delete,Student_Details, \
-    Student_Registration, Student_login, Student_Payments, DashBoard
+    Student_Registration, Student_login, Student_Payments, DashBoard,load_course
 
 urlpatterns = [
     path('course',Course_Registration.as_view(),name='course'),
@@ -28,5 +28,6 @@ urlpatterns = [
     path('st_login', Student_login.as_view(), name='st_login'),
     path('pay', Student_Payments.as_view(), name='pay'),
     path('home', DashBoard.as_view(), name='home'),
+    path('ajax/load-course/',load_course, name='ajax_load_course'),
 ]
 

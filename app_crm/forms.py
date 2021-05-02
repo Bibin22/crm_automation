@@ -75,6 +75,19 @@ class EnquiryCreateForm(ModelForm):
 
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['batch'].queryset = Batch.objects.none()
+
+        if 'course' in self.data:
+            try:
+                course_id = int(self.data.get('course'))
+                self.fields['batch'].queryset = Batch.objects.filter(course_name=course_id).order_by('enquiry')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            self.fields['batch'].queryset = self.instance.course.batch_set.order_by('enquiry')
+
     def clean(self):
         cleaned_data = super().clean()
         followup_date = cleaned_data.get('followup_date')

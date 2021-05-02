@@ -13,7 +13,7 @@
         <td>Batch</td>
         <td>date</td>
     </tr>
-    {% for a in admissions%}
+    {% for a in page_obj%}
 
     <tr>
         <td>{{ a.eid }}</td>
@@ -31,4 +31,33 @@
     {% endfor %}
 
 </table>
+ <nav aria-label="..." style="margin-top: 5%;">
+  <ul class="pagination">
+      {% if page_obj.has_previous %}
+       <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+       </li>
+      {% else %}
+      <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+      </li>
+      {% endif %}
+      {% for i in page_obj.paginator.page_range %}
+      {% if i == page_obj.number %}
+      <li class="page-item active"><a class="page-link">{{i}}</a></li>
+      {% else %}
+      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
+      {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+      <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+      </li>
+      {% endif %}
+  </ul>
+</nav>
 {% endblock %}

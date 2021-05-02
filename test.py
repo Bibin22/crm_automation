@@ -1,19 +1,15 @@
-total = [0, 0, 1200]
-dict = {}
+f = [1, 0, 1200]
+d = {}
 
-items = ["android", "django", "django"]
+c = ["android", "django", "django"]
 
-for item in items:
-        if item not in dict:
-            dict[item] = None
-        else:
-            dict[item] = None
-
-for t in total:
-
-    dict[item] = t
+for cr in c:
+    if cr not in d:
+        d[cr] = None
 
 
+print(str(d))
+for i in f:
+    print(i)
 
-
-print(dict)
+print(d.keys())
